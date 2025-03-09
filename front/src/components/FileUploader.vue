@@ -18,9 +18,16 @@
           accept=".csv" 
           @change.prevent="handleFileChange"
           class="sr-only"
+          multiple
         />
       </div>
     </label>
+    <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
+    <div v-if="progress > 0" class="mt-4">
+      <div class="w-full bg-gray-200 rounded-full">
+        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" :style="{ width: progress + '%' }">{{ progress }}%</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +38,8 @@ import addLine from '../assets/add_line.svg';
 const emit = defineEmits(['file-dropped']);
 
 const isDragging = ref(false);
+const errorMessage = ref('');
+const progress = ref(0);
 
 function handleDragOver(event: DragEvent) {
   event.preventDefault();
@@ -47,7 +56,7 @@ function handleDrop(event: DragEvent) {
   isDragging.value = false;
   const files = event.dataTransfer?.files;
   if (files && files.length > 0) {
-    emit('file-dropped', files[0]);
+    processFiles(files);
   }
 }
 
@@ -55,7 +64,33 @@ function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
   const files = target.files;
   if (files && files.length > 0) {
-    emit('file-dropped', files[0]);
+    processFiles(files);
+  }
+}
+
+function processFiles(files: FileList) {
+  errorMessage.value = '';
+  progress.value = 0;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file.type !== 'text/csv') {
+      errorMessage.value = '無効なファイル形式です。CSVファイルをアップロードしてください。';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        progress.value = Math.round((event.loaded / event.total) * 100);
+      }
+    };
+    reader.onload = () => {
+      emit('file-dropped', file);
+      progress.value = 0;
+    };
+    reader.onerror = () => {
+      errorMessage.value = 'ファイルの読み込み中にエラーが発生しました。';
+    };
+    reader.readAsText(file);
   }
 }
 </script>
