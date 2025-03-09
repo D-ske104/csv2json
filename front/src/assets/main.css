@@ -1,1 +1,112 @@
 @import "tailwindcss";
+
+/* Styles for the progress bar in FileUploader.vue */
+.progress-bar-container {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+}
+
+.progress-bar {
+  background-color: #3b82f6;
+  text-align: center;
+  padding: 0.125rem;
+  color: #f3f4f6;
+  border-radius: 9999px;
+  transition: width 0.3s;
+}
+
+/* Styles for syntax highlighting in JsonViewer.vue */
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #2d2d2d;
+  color: #ccc;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #999;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #f92672;
+}
+
+.hljs-literal,
+.hljs-number,
+.hljs-tag .hljs-attr {
+  color: #ae81ff;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #a6e22e;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name {
+  color: #e6db74;
+}
+
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #e6db74;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #66d9ef;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #fd971f;
+}
+
+.hljs-meta {
+  color: #f8f8f2;
+}
+
+.hljs-deletion {
+  background: #f92672;
+  color: #f8f8f2;
+}
+
+.hljs-addition {
+  background: #a6e22e;
+  color: #f8f8f2;
+}
+
+/* Styles for the settings panel and dark mode */
+.settings-panel {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark .settings-panel {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.dark .settings-panel select,
+.dark .settings-panel input {
+  background-color: #374151;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+
+.dark .settings-panel label {
+  color: #d1d5db;
+}
